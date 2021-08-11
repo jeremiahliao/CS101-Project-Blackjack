@@ -59,5 +59,6 @@ if(start == "Start"):
 		player_value += card[1]
 		
 	print(player_cards)
+	print(player_value)
 
 
