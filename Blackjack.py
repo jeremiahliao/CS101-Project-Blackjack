@@ -31,15 +31,33 @@ class Deck:
 			statement += " " + card + "," 
 		return statement
 
+def win_Conditions(player, dealer):
+	if (player > dealer):
+		print("You win!")
+	elif (player == dealer):
+		print("Tie!")
+	else:
+		print("You lose!")
+
+def replay():
+	decision = input("Would you like to play again? (Y)/(N) : ")
+	if (decision == "Y"):
+		return True
+	else:
+		return False
+
 
 start = input("Welcome! Type \"Start\" to start! : ")
-game = Deck()
-player_cards = []
-player_value = 0
-dealer_cards = []
-dealer_value = 0
+if (start == "Start"):
+	gameplay = True
 
-if(start == "Start"):
+while(gameplay == True):
+	game = Deck()
+	player_cards = []
+	player_value = 0
+	dealer_cards = []
+	dealer_value = 0
+
 	for i in range(2):
 		dealer_card = game.deal()
 		dealer_cards.append(dealer_card[0])
@@ -53,12 +71,36 @@ if(start == "Start"):
 	print(player_value)
 
 	action = input("Would you like to Hit (H) or Stand (S)? : ")
-	if(action == "H"):
+
+	while(action == "H"):
 		card = game.make_play()
 		player_cards.append(card[0])
 		player_value += card[1]
+	
+		print(player_cards)
+		print(player_value)
+
+		if(player_value > 21):
+			print("Bust!")
+			gameplay = replay()
+			break
+		action = input("Would you like to Hit (H) or Stand (S)? : ")
+
+	if(action == "S"):
+		print("Your current card value is : " + str(player_value))
+		print("Dealer card value is : " + str(dealer_value))
+		while(dealer_value < 16):
+			card = game.make_play()
+			dealer_cards.append(card[0])
+			dealer_value += card[1]
+			print("Dealer card value is now : " + str(dealer_value))
+		print("Dealer stands")
+
+		win_Conditions(player_value,dealer_value)
+		gameplay = replay()
+
+print("Goodbye!")
+
+
+
 		
-	print(player_cards)
-	print(player_value)
-
-
